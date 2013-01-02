@@ -1,0 +1,86 @@
+{% extends "bootstrap/base.html" %}
+
+{% block head_title %}{{ SITE_NAME }}{% endblock %}
+{% block head_styles %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/styles.css">
+{% endblock %}
+
+{% block meta_description %}{% endblock %}
+{% block meta_additional %}
+<meta property="fb:admins" content="507220734" />
+<meta property="og:site_name" content="calebbrown.id.au" />
+{% endblock %}
+
+{% block head_additional %}
+<link rel="alternate" type="application/rss+xml" title="{{ SITE_NAME }}: All Posts" href="/feed" />
+<link rel="alternate" type="application/rss+xml" title="{{ SITE_NAME }}: Life Blog Posts" href="/feed/channel/life" />
+<link rel="alternate" type="application/rss+xml" title="{{ SITE_NAME }}: Tech Blog Posts" href="/feed/channel/tech" />
+<link rel="alternate" type="application/rss+xml" title="{{ SITE_NAME }}: Meta Blog Posts" href="/feed/channel/meta" />
+{% endblock %}
+
+
+{% block header %}
+<header id="masthead">
+  <div class="inner">
+    <h1><a href="/">{{ SITE_NAME }}</a></h1>
+  </div>
+</header>
+{% endblock %}
+
+{% block footer %}
+<footer>
+  <div class="row">
+    <div class="span10">
+      <ul class="unstyled">
+        <li><a href="/">Home</a> / <a href="/about">About</a> / <a href="/blog">Blog</a> / <a href="/feedback">Feedback</a></li>
+        <li>
+          <a href="http://twitter.com/calebbrown">Twitter</a> /
+          <a href="https://github.com/calebbrown">GitHub</a> /
+          <a href="https://bitbucket.org/calebbrown">Bitbucket</a> /
+          <a href="http://au.linkedin.com/in/calebbrown0">LinkedIn</a></li>
+      </ul>
+    </div>
+    <div class="span5 offset1" style="text-align:right;">&copy; Copyright 2012, Caleb Brown</div>
+  </div>
+</footer>
+{% endblock %}
+
+{% block body_additional %}
+<!-- Facebook -->
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({appId: '128271133883021', status: true, cookie: true, xfbml: true});
+  };
+  (function() {
+    var e = document.createElement('script');
+    e.type = 'text/javascript';
+    e.src = document.location.protocol +
+      '//connect.facebook.net/en_US/all.js';
+    e.async = true;
+    document.getElementById('fb-root').appendChild(e);
+  }());
+</script>
+<!-- End Facebook -->
+{% if 0 == 1 %}<!-- StatCounter -->
+<script type="text/javascript">
+var sc_project=349034;
+var sc_invisible=1;
+var sc_security="";
+</script>
+<script type="text/javascript" src="http://www.statcounter.com/counter/counter.js"></script>
+<noscript><div class="statcounter"><a title="tumblr visitor" href="http://statcounter.com/tumblr/" target="_blank"><img class="statcounter" src="http://c.statcounter.com/349034/0//1/" alt="tumblr visitor"></a></div></noscript>
+<!-- End StatCounter -->{% endif %}
+<!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12637619-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- End Google Analytics -->
+{% endblock %}

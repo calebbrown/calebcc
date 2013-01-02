@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<section id="latest-post">
+  <header class="page-header">
+    <h2>Latest Post</h2>
+  </header>
+  <article>
+    <h1><a href="/blog/{{ docs[0].path }}">{{ docs[0].title }}</a> {% if docs[0].type=='blog' %}<small>{{ docs[0].created_on.strftime('%d %B %Y').lstrip('0') }}</small>{% endif %}</h1>
+      {{ docs[0].render_summary() }}
+
+    </article>
+        {% if docs[0].has_summary %}
+        <a href="/blog/{{ docs[0].path }}">Read More...</a>
+        {% endif %}
+</section>
+
+<section id="more-posts">
+  <header class="page-header">
+    <h2>More Posts</h2>
+  </header>
+
+  <div class="row">
+    {% for d in docs[1:] %}
+    <div class="span4{% if not loop.first %} offset2{% endif %}"><h3><a href="/blog/{{ d.path }}">{{ d.title }}</a></h3>{{ d.render_body()|striptags|truncate(200) }} <a href="/blog/{{ d.path }}">more</a></div>
+    {% endfor %}
+  </div>
+
+  <div class="row">
+    <div class="span16">
+      <h3><a href="/blog">View All</a></h3>
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

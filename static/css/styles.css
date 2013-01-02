@@ -1,0 +1,38 @@
+section {
+  margin-bottom: 20px;
+}
+.container {
+    width: 720px;
+}
+#masthead {
+  background-image: url('../imgs/masthead.jpg');
+  height:175px;
+  margin-bottom:20px;
+}
+#masthead .inner {
+  padding: 120px 20px 20px;
+}
+#masthead h1 {
+  font-size: 46px;
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, .7);
+}
+#masthead h1 a {
+  color: white;
+  text-decoration: none;
+}
+#read-more {
+  margin-top: 20px;
+}
+#more-posts h3 {
+  line-height: inherit;
+  margin-bottom: 10px;
+}
+.ad {
+  text-align: center;
+  margin-top: 20px;
+}
+#latest-post article h1 a {
+  color: #404040;
+}

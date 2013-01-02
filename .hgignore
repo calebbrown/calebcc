@@ -1,0 +1,29 @@
+syntax: glob
+
+# hide virtualenv working files
+env
+activate.sh
+
+# hide the media directory, because it's for UGC
+media
+
+# hide any dev dbs
+*.db
+*.sqlite
+*.sqlite3
+
+# hide bytecode
+*.pyc
+
+# hide common editor swaps
+.*.sw?
+
+# hide OS X Meta files
+._*
+.DS_Store
+
+# hide FUSE Junk
+.fuse_hidden*
+
+# hide nose testing output
+nosetests.xml
