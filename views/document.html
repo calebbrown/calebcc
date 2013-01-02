@@ -25,7 +25,7 @@
     {% if doc.type == 'blog' %}
     <div class="social row">
       <div class="span3">
-        <a href="https://twitter.com/share" class="twitter-share-button" data-via="CalebBrown">Tweet</a>
+        <a href="https://twitter.com/share" class="twitter-share-button" data-via="CalebBrown" data-text="{{ doc.title }}" data-url="{{ SITE_BASE }}blog/{{ doc.path }}">Tweet</a>
       </div>
       <div class="span13">
         <div class="fb-like" data-send="true" data-layout="button_count" data-width="450" data-show-faces="false"></div>
