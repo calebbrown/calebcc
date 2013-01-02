@@ -2,19 +2,21 @@ import os
 import sys
 import importlib
 
-# import ourselves so we can add a few things
+# import ourselves so we can set overrides from a local module
 import config
 
+# Setup paths
 PROJECT_PATH = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 DATA_SOURCE = os.path.abspath(os.path.join(PROJECT_PATH, '../site_data'))
 DATA_STORE = os.path.abspath(os.path.join(PROJECT_PATH, '../compiled_data'))
-DEFAULT_FORMAT = 'markdown'
-SITE_NAME = 'calebbrown.id.au'
-SITE_BASE = 'http://calebbrown.id.au/'
-
 TEMPLATE_PATHS = [
     os.path.join(config.PROJECT_PATH, 'views'),
 ]
+
+DEFAULT_FORMAT = 'markdown'
+
+SITE_NAME = 'calebbrown.id.au'
+SITE_BASE = 'http://calebbrown.id.au/'
 
 CHANNEL_OPTIONS = (
     ('meta', 'Meta'),
@@ -22,6 +24,9 @@ CHANNEL_OPTIONS = (
     ('tech', 'Tech'),
     ('legacy', 'Legacy'),
 )
+
+# The time in days before we start showing adverts of blog posts
+ADVERT_LIMIT = 40
 
 MEMCACHE_SOCK = 'unix:' + os.path.expanduser('~/memcached.sock')
 
@@ -37,7 +42,8 @@ if 'CALEBCC_CONFIG_MODULE' in os.environ:
             continue
         setattr(config, k, v)
 
-
+# setup the cache
+# TODO: move this into it's own module
 try:
     import memcache
     CACHE = memcache.Client([MEMCACHE_SOCK], debug=0)

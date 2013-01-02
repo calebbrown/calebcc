@@ -16,13 +16,13 @@ __all__ = ['app']
 
 app = Bottle()
 
-
+# Arguments to send to every template we render
 view_kwargs = {
     'STATIC_URL': '/static/',
     'SITE_BASE': config.SITE_BASE,
     'SITE_NAME': config.SITE_NAME,
     'NOW': datetime.datetime.now(),
-    'ADVERT_LIMIT': datetime.datetime.now() - datetime.timedelta(40)
+    'ADVERT_LIMIT': datetime.datetime.now() - datetime.timedelta(config.ADVERT_LIMIT)
 }
 TEMPLATE_PATH += config.TEMPLATE_PATHS
 
@@ -36,11 +36,19 @@ except ImportError:
 
 @app.route('/favicon.ico')
 def favicon():
+    """
+    Handle the favicon.ico responses.
+
+    Eventually this will redirect to an icon in the static files.
+    """
     abort(404, "Not Found")
 
 
 @app.route('/')
 def index():
+    """
+    Render the homepage.
+    """
     page = config.CACHE.get('view:index')
     if page:
         return page
@@ -54,11 +62,20 @@ def index():
 
 @app.route('/search/node<junk:re:.*>')
 def home_redirect(junk=None):
+    """
+    Legacy redirect for old Drupal search urls
+    """
     redirect('/')
 
 
 @app.route('/tag/<name>')
 def tag_redirect(name):
+    """
+    Legacy redirect for tags.
+
+    Based on traffic it redirects to the page represented by
+    the most popular tags
+    """
     if name in ['emoticon', 'chat', 'facebook', 'smilie', 'list']:
         redirect('/blog/complete-list-facebook-chat-emoticons')
     elif name == 'contact':
@@ -68,6 +85,9 @@ def tag_redirect(name):
 
 @app.route('/static/<path:path>')
 def callback(path):
+    """
+    Debug view for serving up static files
+    """
     if path.startswith('media/'):
         return static_file(path, root=config.DATA_SOURCE)
     return static_file(path, root=os.path.join(config.PROJECT_PATH, 'static'))
@@ -75,6 +95,11 @@ def callback(path):
 
 @app.route('/crss')
 def removed_feed():
+    """
+    Legacy feed for Drupal comment feed
+
+    Adds a single entry indicating the feed is no longer in use.
+    """
     title = '%s: Deprecated Feed' % config.SITE_NAME
     description = 'This feed has been deprecated and no longer exists.'
     feed_url = config.SITE_BASE + 'crss'
@@ -90,6 +115,9 @@ def removed_feed():
 @app.route('/feed')
 @app.route('/feed/channel/<name>')
 def blog_feed(name='list_all'):
+    """
+    Feed generation for the blog
+    """
     index_name = 'blog' if name == 'list_all' else 'blog_%s' % name
     docs = manager.list(index_name)[:20]
 
@@ -113,6 +141,11 @@ def blog_feed(name='list_all'):
 @app.route('/blog')
 @app.route('/blog/channel/<name>')
 def blog_list(name='list_all'):
+    """
+    Blog index page
+
+    Generates a list of posts in the blog. It can be filtered by channel.
+    """
     page = config.CACHE.get('view:blog_list:%s' % name)
     if page:
         return page
@@ -127,6 +160,11 @@ def blog_list(name='list_all'):
 
 @app.route('/blog/<path:re:[a-z0-9._/-]+>')
 def blog_post(path):
+    """
+    Blog detail page
+
+    Renders a single blog post.
+    """
     newpath = path.strip('/')
     if path != newpath:
         redirect('/blog/' + newpath)
@@ -158,6 +196,11 @@ def blog_post(path):
 
 @app.route('/<path:re:[a-z0-9._/-]+>')
 def page(path):
+    """
+    Page detail page
+
+    Renders a single page.
+    """
     newpath = path.strip('/')
     if path != newpath:
         redirect(newpath)
@@ -179,6 +222,11 @@ def page(path):
 
 @app.error(404)
 def error404(error):
+    """
+    404 Not Found handler
+
+    Overrides the default response to keep users on the blog.
+    """
     view_context = {}
     view_context.update(view_kwargs)
     return template('404.html', **view_context)
