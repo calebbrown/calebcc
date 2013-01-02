@@ -103,7 +103,7 @@ class Parser(object):
             data = email_to_dict(fd)
 
         # Grab any alternate slugs
-        alts = data.pop('alt-slugs', [])
+        alts = data.pop('alt-slug', [])
 
         # Populate the document
         for (field, values) in data.iteritems():
