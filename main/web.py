@@ -68,6 +68,8 @@ def tag_redirect(name):
 
 @app.route('/static/<path:path>')
 def callback(path):
+    if path.startswith('media/'):
+        return static_file(path, root=config.DATA_SOURCE)
     return static_file(path, root=os.path.join(config.PROJECT_PATH, 'static'))
 
 
