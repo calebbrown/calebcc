@@ -163,7 +163,7 @@ def page(path):
     """
     newpath = path.strip('/')
     if path != newpath:
-        redirect(newpath)
+        redirect('/' + newpath)
 
     try:
         doc = manager.get('page/%s' % path)
