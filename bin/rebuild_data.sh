@@ -1,5 +1,6 @@
 #!/bin/sh
 
+HG_PATH="$HOME/bin/hg"
 BASE_PATH="$HOME/webapps/calebcc_bottle"
 
 PROJECT_PATH="$BASE_PATH/project"
@@ -16,7 +17,7 @@ mkdir -p "$BUILDS_PATH"
 
 # Update the data
 cd "$SOURCE_PATH"
-hg pull -u
+$HG_PATH pull -u
 
 # Rebuild the content
 cd "$PROJECT_PATH"
