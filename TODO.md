@@ -9,16 +9,10 @@ Bug:
  - node/[id] urls should look at blog and page entries
 
 
-Before Open Sourcing:
- - key goal: remove security risks and performance risks
- - key goal: clear copyright and licensing
- 1. parsing needs to be triggered from the CLI (prevent DoS)
-   * bin folder for host level things like hg pull, symlinking and apache restart
-
 steps:
 1. hg pull the source data
 2. compile into a 'new' location (e.g. timestamp)
-3. swap symlinks
+3. swap symlinks (code doesn't cache os.path.realpath, etc so it should refresh)
 
 
  Python 3 and Dependency Refresh
