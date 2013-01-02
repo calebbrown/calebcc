@@ -11,13 +11,16 @@
 
 {% block content %}
 <section id="post">
-  <article>
+  <article vocab="http://schema.org/" typeof="{% if doc.type=='blog' %}BlogPosting{% else %}Article{% endif %}">
     <header class="page-header">
-      <h1>{{ doc.title }} {% if doc.type=='blog' %}<small>{{ doc.created_on.strftime('%d %B %Y').lstrip('0') }}</small>{% endif %}</h1>
+      <h1><span property="headline">{{ doc.title }}</span>
+        {% if doc.type=='blog' %}<small property="dateCreated" content="{{ doc.created_on.strftime('%Y-%m-%d') }}">{{ doc.created_on.strftime('%d %B %Y').lstrip('0') }}</small>{% endif %}</h1>
       {% if doc.type=='blog' %}<p>{% for channel in doc.channels %}<a class="label" href="/blog/channel/{{ channel }}">{{ channel.title() }}</a>{% endfor %}</p>{% endif %}
     </header>
 
+    <div property="articleBody">
     {{ doc.render_body() }}
+    </div>
 
     {% if doc.type == 'blog' %}
     <div class="social row">
