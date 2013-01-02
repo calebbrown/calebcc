@@ -5,11 +5,12 @@ After live:
    * colour tweak - make it look less bootstrap
 
 Bug:
- - deploy (or content refresh) should symlink media directory
  - node/[id] urls should look at blog and page entries
 
+- finish adding series support
+- add tests
 
- Python 3 and Dependency Refresh
+Python 3 and Dependency Refresh
    * bottle - YES # old
    * python-dateutil - YES
    * Markdown - YES # old

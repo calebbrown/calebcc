@@ -1,7 +1,6 @@
 import datetime
 import random
 import os
-from functools import wraps
 
 from bottle import (Bottle, abort, redirect, TEMPLATE_PATH, static_file,
     response)
@@ -10,6 +9,7 @@ from bottle import jinja2_template as template
 from feedgenerator import DefaultFeed as Feed
 
 from . import config
+from . import legacy
 from models import (DocumentNotFound, DocumentMoved, manager)
 
 __all__ = ['app']
@@ -33,6 +33,8 @@ try:
 except ImportError:
     pass
 
+
+legacy.add_views(app)
 
 @app.route('/favicon.ico')
 def favicon():
@@ -60,29 +62,6 @@ def index():
     return page
 
 
-@app.route('/search/node<junk:re:.*>')
-def home_redirect(junk=None):
-    """
-    Legacy redirect for old Drupal search urls
-    """
-    redirect('/')
-
-
-@app.route('/tag/<name>')
-def tag_redirect(name):
-    """
-    Legacy redirect for tags.
-
-    Based on traffic it redirects to the page represented by
-    the most popular tags
-    """
-    if name in ['emoticon', 'chat', 'facebook', 'smilie', 'list']:
-        redirect('/blog/complete-list-facebook-chat-emoticons')
-    elif name == 'contact':
-        redirect('/feedback')
-    redirect('/blog')
-
-
 @app.route('/static/<path:path>')
 def callback(path):
     """
@@ -91,25 +70,6 @@ def callback(path):
     if path.startswith('media/'):
         return static_file(path, root=config.DATA_SOURCE)
     return static_file(path, root=os.path.join(config.PROJECT_PATH, 'static'))
-
-
-@app.route('/crss')
-def removed_feed():
-    """
-    Legacy feed for Drupal comment feed
-
-    Adds a single entry indicating the feed is no longer in use.
-    """
-    title = '%s: Deprecated Feed' % config.SITE_NAME
-    description = 'This feed has been deprecated and no longer exists.'
-    feed_url = config.SITE_BASE + 'crss'
-    feed = Feed(title, config.SITE_BASE, description, feed_url=feed_url,
-        feed_guid=feed_url, feed_copyright=u'(c) Copyright 2012, Caleb Brown')
-    feed.add_item('This RSS feed no longer exists', config.SITE_BASE,
-        'This feed no longer exists. But calebbrown.id.au is still '
-        'alive and kicking. Please visit the hompage to see what\'s new.')
-    response.content_type = 'application/rss+xml; charset=utf-8'
-    return feed.writeString('utf-8')
 
 
 @app.route('/feed')
