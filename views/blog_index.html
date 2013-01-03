@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block head_title %}{% if page == 'list_all' %}All{% else %}{{ page.title() }}{% endif %} | Blog Posts | {{ super() }}{% endblock %}
+
+{% block content %}
+<section id="post-list">
+  <header>
+    <h2>Blog Posts</h2>
+    <ul class="tabs">
+      <li class="{% if page == 'list_all' %}active{% endif %}"><a href="/blog">All</a></li>
+      <li class="{% if page == 'life' %}active{% endif %}"><a href="/blog/channel/life">Life</a></li>
+      <li class="{% if page == 'tech' %}active{% endif %}"><a href="/blog/channel/tech">Tech</a></li>
+      <li class="{% if page == 'meta' %}active{% endif %}"><a href="/blog/channel/meta">Meta</a></li>
+      <li class="{% if page == 'series' %}active{% endif %}"><a href="/blog/series">Series</a></li>
+      {% if page == 'legacy' %}<li class="active"><a href="/blog/channel/legacy">Legacy</a></li>{% endif %}
+    </ul>
+  </header>
+
+  {% block inner_content %}
+  {% endblock %}
+
+</section>
+
+{% endblock %}

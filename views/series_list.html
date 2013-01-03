@@ -1,0 +1,16 @@
+{% extends "blog_index.html" %}
+
+{% block inner_content %}
+{% for s, docs in series.items() %}
+<h4 id="series-{{ s.lower().replace(' ', '-') }}">{{ s }}</h4>
+<ul class="unstyled">
+{% for doc in docs.reverse() %}
+  <li>
+    {{ doc.created_on.strftime('%Y-%m-%d') }}
+    <a style="padding-left:5px" href="/blog/{{ doc.path }}">#{{ loop.index }}: <b>{{ doc.title }}</b></a>
+    <span style="overflow: hidden; white-space:nowrap; color: #BBB; padding-left: 10px">{{ doc.render_body()|striptags|truncate(45) }}</span>
+  </li>
+{% endfor %}
+</ul>
+{% endfor %}
+{% endblock %}

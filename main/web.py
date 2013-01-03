@@ -112,9 +112,30 @@ def blog_list(name='list_all'):
 
     index_name = 'blog' if name == 'list_all' else 'blog_%s' % name
     docs = manager.list(index_name)
-    page = template('list.html', docs=docs, channel=name, **view_kwargs)
+    page = template('list.html', docs=docs, page=name, **view_kwargs)
 
     config.CACHE.set('view:blog_list:%s' % name, page, time=300)
+    return page
+
+
+@app.route('/blog/series')
+def series_list():
+    """
+    Blog series index page
+
+    Generates a list of series in the blog.
+    """
+    page = config.CACHE.get('view:series_list')
+    if page:
+        return page
+
+    series = manager.view('blog_series')
+    series_data = {}
+    for s in series:
+        series_data[s] = manager.list('blog_series_%s' % s)
+    page = template('series_list.html', series=series_data, page='series', **view_kwargs)
+
+    config.CACHE.set('view:series_list', page, time=300)
     return page
 
 

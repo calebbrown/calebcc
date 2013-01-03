@@ -1,42 +1,25 @@
-{% extends "base.html" %}
+{% extends "blog_index.html" %}
 
-{% block head_title %}{% if channel == 'list_all' %}All{% else %}{{ channel.title() }}{% endif %} | Blog Posts | {{ super() }}{% endblock %}
+{% block inner_content %}
+<ul class="unstyled">
+{% for doc in docs %}
+  <li>
+    {{ doc.created_on.strftime('%Y-%m-%d') }}
+    <a style="padding-left:5px" href="/blog/{{ doc.path }}"><b>{{ doc.title }}</b></a>
+    <span style="overflow: hidden; white-space:nowrap; color: #BBB; padding-left: 10px">{{ doc.render_body()|striptags|truncate(45) }}</span>
+  </li>
+{% endfor %}
+</ul>
 
-{% block content %}
-<section id="post-list">
-  <header>
-    <h2>Blog Posts</h2>
-    <ul class="tabs">
-      <li class="{% if channel == 'list_all' %}active{% endif %}"><a href="/blog">All</a></li>
-      <li class="{% if channel == 'life' %}active{% endif %}"><a href="/blog/channel/life">Life</a></li>
-      <li class="{% if channel == 'tech' %}active{% endif %}"><a href="/blog/channel/tech">Tech</a></li>
-      <li class="{% if channel == 'meta' %}active{% endif %}"><a href="/blog/channel/meta">Meta</a></li>
-      {% if channel == 'legacy' %}<li class="active"><a href="/blog/channel/legacy">Legacy</a></li>{% endif %}
-    </ul>
-  </header>
-
-  <ul class="unstyled">
-  {% for doc in docs %}
-    <li>
-      {{ doc.created_on.strftime('%Y-%m-%d') }}
-      <a style="padding-left:5px" href="/blog/{{ doc.path }}"><b>{{ doc.title }}</b></a>
-      <span style="overflow: hidden; white-space:nowrap; color: #BBB; padding-left: 10px">{{ doc.render_body()|striptags|truncate(45) }}</span>
-    </li>
-  {% endfor %}
+{% if 0 %}<div class="pagination">
+  <ul>
+    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
+    <li class="active"><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li class="next"><a href="#">Next &rarr;</a></li>
   </ul>
-
-  {% if 0 %}<div class="pagination">
-    <ul>
-      <li class="prev disabled"><a href="#">&larr; Previous</a></li>
-      <li class="active"><a href="#">1</a></li>
-      <li><a href="#">2</a></li>
-      <li><a href="#">3</a></li>
-      <li><a href="#">4</a></li>
-      <li><a href="#">5</a></li>
-      <li class="next"><a href="#">Next &rarr;</a></li>
-    </ul>
-  </div>{% endif %}
-
-</section>
-
+</div>{% endif %}
 {% endblock %}
