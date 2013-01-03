@@ -139,6 +139,11 @@ class DocumentIterator(object):
         for key in self.index:
             yield self.manager.get(key)
 
+    def reverse(self):
+        index = self.index[:]
+        index.reverse()
+        return self.__class__(self.manager, index=index)
+
 
 class DocumentManager(object):
 
