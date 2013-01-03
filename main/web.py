@@ -112,7 +112,7 @@ def blog_list(name='list_all'):
 
     index_name = 'blog' if name == 'list_all' else 'blog_%s' % name
     docs = manager.list(index_name)
-    page = template('list.html', docs=docs, page=name, **view_kwargs)
+    page = template('blog_list.html', docs=docs, page=name, **view_kwargs)
 
     config.CACHE.set('view:blog_list:%s' % name, page, time=300)
     return page
