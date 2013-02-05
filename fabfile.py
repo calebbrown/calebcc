@@ -10,7 +10,7 @@ if 'CALEBBC_SSH_KEY_FILE' in os.environ:
 
 remote_dir = '~/webapps/calebcc_bottle'
 remote_static_dir = '~/webapps/calebcc_static'
-repo_url = 'ssh://hg@bitbucket.org/calebbrown/calebcc_site'
+repo_url = 'https://github.com/calebbrown/calebcc.git'
 
 
 @task
@@ -18,13 +18,13 @@ def init_env():
     with cd(remote_dir):
         run('mkdir cache')
         run('mkdir versions')
-        run('hg clone %s cache/calebcc_site' % repo_url)
+        run('git clone %s cache/calebcc_site' % repo_url)
 
 
 @task
 def update_cache():
     with cd(os.path.join(remote_dir, 'cache/calebcc_site')):
-        run('hg pull -u')
+        run('git pull -u')
 
 
 @task
@@ -36,7 +36,7 @@ def prepare(version=None, version_timestamp=None):
 
     # copy the source code
     with cd(os.path.join(remote_dir, 'versions')):
-        run('hg clone %s %s' % (os.path.join(remote_dir, 'cache/calebcc_site'), version_timestamp))
+        run('git clone %s %s' % (os.path.join(remote_dir, 'cache/calebcc_site'), version_timestamp))
 
     # create the version file
     version_tmp_file = '/tmp/version.%s.py' % version_timestamp
