@@ -12,18 +12,31 @@ from .formats import get_formatter
 
 
 class DocumentNotFound(Exception):
+    """
+    Exception returned when a document cannot be found.
+    """
     pass
 
 
 class DocumentIndexNotFound(Exception):
+    """
+    Exception returned when an index cannot be found.
+    """
     pass
 
 
 class DocumentViewNotFound(Exception):
+    """
+    Exception returned when a view cannot be found.
+    """
     pass
 
 
 class DocumentMoved(Exception):
+    """
+    Exception used when the document has actually be moved
+    to another localtion.
+    """
     def __init__(self, location, *args, **kwargs):
         self.location=location
         super(DocumentMoved, self).__init__(*args, **kwargs)

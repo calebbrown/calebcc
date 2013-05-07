@@ -28,6 +28,12 @@ def tag_redirect(name):
 
 
 def node_redirect(node_id):
+    """
+    Legacy redirect for node pages reference by node id
+
+    Since these are namespaced by blog or page we need to check each for
+    a document to redirect to.
+    """
     for doctype, redirbase in {'blog':'/blog/', 'page':'/'}.items():
         try:
             doc = manager.get('%s/node/%s' % (doctype, node_id))

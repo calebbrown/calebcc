@@ -9,6 +9,8 @@ from bottle import run, debug
 from main import app, parser
 
 def main(argv):
+    # Very basic argument processing. Handle --parse, otherwise
+    # run the server.
     if '--parse' in argv:
         argv.pop(argv.index('--parse'))
 

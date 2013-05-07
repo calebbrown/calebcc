@@ -13,6 +13,6 @@ class MyDocument(Document):
     channels = ListField(StringField())
     series = ListField(StringField())
 
-
+## Create an instance of the manager we use to look after our documents
 manager = CachedDocumentManager(config.DATA_STORE, config.CACHE,
     cache_ttl=3600, document_class=MyDocument)

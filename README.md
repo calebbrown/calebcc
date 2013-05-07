@@ -104,3 +104,13 @@ It is also possible to specify the format using the `Format` header. Apart from 
 
 A blank line is required between the last header and the first line of the body.
 
+#### Creating Alternative URLs
+
+The  header `Alt-Slug` can be added to indicate an alternative location for the document to be accessed under. This is particularly useful in the case where
+a blog post has been renamed.
+
+When a user visits the alternative location they are redirected to the real location.
+
+Multiple `Alt-Slug` headers can be added for multiple redirects.
+
+

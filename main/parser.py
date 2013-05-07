@@ -8,6 +8,20 @@ from .models import manager
 
 
 def parse(source_path=None, destination_path=None):
+    """
+    Parses the source documents and creates the JSON database for the site.
+
+    It parses files in the `blog` and `legacy` directories and places them in
+    the `blog` type.
+
+    It parses files in the `pages` directory and places them in the
+    `page` type.
+
+    It creates a series of indexes for each channel option.
+
+    It uses map-reduce to build a view for representing series and builds
+    indexes from those.
+    """
     if source_path is None:
         source_path = config.DATA_SOURCE
     if destination_path is not None:
@@ -56,6 +70,9 @@ def parse(source_path=None, destination_path=None):
 
 
 def run():
+    """
+    Method that can be run from the command line to parse documents
+    """
     parser = OptionParser(usage="usage: %prog [options]")
     parser.add_option(
         "-s", "--source",
