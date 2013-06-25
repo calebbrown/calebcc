@@ -49,6 +49,13 @@ def parse(source_path=None, destination_path=None):
             filters=dict([('channels', channel)] + base_filters.items()),
             sort_field='-created_on')
 
+    # Series extraction and indexing
+    #
+    # This code below does two things:
+    # 1. Goes through every blog post and extracts the name of each "Series".
+    #    This is done using a simplistic form of map-reduce.
+    # 2. for each series it finds creates and index for it
+
     def series_map(d):
         for s in d.series:
             yield s
@@ -57,11 +64,11 @@ def parse(source_path=None, destination_path=None):
             r.append(d)
         return r
 
-    # create a view that returns all the series so we can link them together
+    # create a view containing all the series so we can link them together
     series_list = manager.create_view('blog_series', 'blog', map_func=series_map,
         reduce_func=series_reduce)
 
-    # create indexes for each searies as well
+    # create an index for each series so we can list each post in it
     for series in series_list:
         manager.create_index(
             'blog_series_%s' % series,
