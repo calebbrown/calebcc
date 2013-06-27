@@ -6,7 +6,7 @@ if 'CALEBCC_CONFIG_MODULE' not in os.environ:
 
 from bottle import run, debug
 
-from main import app, parser
+from calebcc import app, parser
 
 def main(argv):
     # Very basic argument processing. Handle --parse, otherwise

@@ -44,7 +44,7 @@ def prepare(version=None, version_timestamp=None):
     fd.write('DEPLOY_VERSION = "%s"\n' % version_timestamp)
     fd.close()
 
-    put(version_tmp_file, os.path.join(remote_dir, 'versions', version_timestamp, 'main', 'version.py'))
+    put(version_tmp_file, os.path.join(remote_dir, 'versions', version_timestamp, 'calebcc', 'version.py'))
     local('rm %s' % version_tmp_file)
 
     with cd(os.path.join(remote_dir, 'versions', version_timestamp)):
