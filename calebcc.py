@@ -2,7 +2,7 @@ import os
 import sys
 
 if 'CALEBCC_CONFIG_MODULE' not in os.environ:
-    os.environ['CALEBCC_CONFIG_MODULE'] = 'env.dev'
+    os.environ['CALEBCC_CONFIG_MODULE'] = 'calebcc.env.dev'
 
 from bottle import run, debug
 

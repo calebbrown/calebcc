@@ -6,11 +6,12 @@ import importlib
 import config
 
 # Setup paths
+LOCAL_PATH = os.path.abspath(os.path.dirname(__file__))
 PROJECT_PATH = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 DATA_SOURCE = os.path.abspath(os.path.join(PROJECT_PATH, '../site_data'))
 DATA_STORE = os.path.abspath(os.path.join(PROJECT_PATH, '../compiled_data'))
 TEMPLATE_PATHS = [
-    os.path.join(config.PROJECT_PATH, 'views'),
+    os.path.join(LOCAL_PATH, 'views'),
 ]
 
 DEFAULT_FORMAT = 'markdown'

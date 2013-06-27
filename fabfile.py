@@ -52,7 +52,7 @@ def prepare(version=None, version_timestamp=None):
         run('pip install -E env -r requirements.txt')
         run('env/bin/python -m compileall -q .')
 
-    run('ln -sfn %s %s' % (os.path.join(remote_dir, 'versions', version_timestamp, 'static'), os.path.join(remote_static_dir, version_timestamp)))
+    run('ln -sfn %s %s' % (os.path.join(remote_dir, 'versions', version_timestamp, 'calebcc', 'static'), os.path.join(remote_static_dir, version_timestamp)))
     run('ln -sfn %s %s' % (os.path.join(remote_dir, 'site_data/media'), os.path.join(remote_static_dir, 'media')))
 
 
